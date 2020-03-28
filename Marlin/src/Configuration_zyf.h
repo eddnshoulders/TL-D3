@@ -3,7 +3,7 @@
  
 //#define ZYF_DEBUG
 
-#define TENLOG_CONTROLLER
+//#define TENLOG_CONTROLLER
 #define FILAMENT_FAIL_DETECT //Done 20191102
 //#define POWER_LOSS_RECOVERY //It's OK need hardware support. Done 20191120
 #define PRINT_FROM_Z_HEIGHT  // Done 20191219

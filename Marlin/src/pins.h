@@ -1,5 +1,5 @@
 #ifndef PINS_H
-#define PINS_H
+    #define PINS_H
 
 #define X_MS1_PIN -1
 #define X_MS2_PIN -1
@@ -18,26 +18,24 @@
 *
 ****************************************************************************************/
 #if MOTHERBOARD == 3 || MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
-#define KNOWN_BOARD 1
+    #define KNOWN_BOARD 1
 
-//////////////////FIX THIS//////////////
-#ifndef __AVR_ATmega1280__
-	#ifndef __AVR_ATmega2560__
-		#error Oops!  Make sure you have 'Arduino Mega' selected from the 'Tools -> Boards' menu.
-	#endif
+    //////////////////FIX THIS//////////////
+    #ifndef __AVR_ATmega1280__
+	    #ifndef __AVR_ATmega2560__
+		    #error Oops!  Make sure you have 'Arduino Mega' selected from the 'Tools -> Boards' menu.
+	    #endif
+    #endif
+
+    // uncomment one of the following lines for RAMPS v1.3 or v1.0, comment both for v1.2 or 1.1
+    // #define RAMPS_V_1_3
+    // #define RAMPS_V_1_0
 #endif
-
-// uncomment one of the following lines for RAMPS v1.3 or v1.0, comment both for v1.2 or 1.1
-// #define RAMPS_V_1_3
-// #define RAMPS_V_1_0
 
 #if MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
 	#define LARGE_FLASH true
 
-	#if MOTHERBOARD == 77
-
-	#else //Ramps here By zyf 34
-
+	#if MOTHERBOARD == 33 || MOTHERBOARD == 34
         #define X_STEP_PIN         54
         #define X_DIR_PIN          55
         #define X_ENABLE_PIN       38
@@ -85,16 +83,17 @@
 		#define SDPOWER            -1
 		#define SDSS               53
 		#define LED_PIN            13
-	#endif	//Ramps 34
+	#endif	//Ramps 33 or 34
 
 	#define FAN_PIN            9 // (Sprinter config)
 
 	#define PS_ON_PIN          40 //zyf 40		//PF1
 
 	#if defined(POWER_LOSS_RECOVERY)
-	#define POWER_LOSS_DETECT_PIN           32 //zyf 32		//PF2
+	    #define POWER_LOSS_DETECT_PIN           32 //zyf 32		//PF2
 	#else
-	#define POWER_LOSS_DETECT_PIN           -1
+	    #define POWER_LOSS_DETECT_PIN           -1
+    #endif
 
     #define ENGRAVE_PIN 35
 #endif //MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
@@ -145,93 +144,119 @@
     #define LCD_PINS_D5 -1 
     #define LCD_PINS_D6 -1
     #define LCD_PINS_D7 -1
-
 #endif
+
 #define SDCARDDETECT 49
 
-#endif // MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
+#ifdef REPRAP_DISCOUNT_SMART_CONTROLLE
+    #ifdef NEWPANEL
+        #define LCD_PINS_RS 16 
+        #define LCD_PINS_ENABLE 17
+        #define LCD_PINS_D4 23
+        #define LCD_PINS_D5 25 
+        #define LCD_PINS_D6 27
+        #define LCD_PINS_D7 29
+        #define BEEPER 37
+    #else // old panel		
+        #define LCD_PINS_RS 16 
+        #define LCD_PINS_ENABLE 17
+        #define LCD_PINS_D4 23
+        #define LCD_PINS_D5 25 
+        #define LCD_PINS_D6 27
+        #define LCD_PINS_D7 29
+        #define BEEPER 33
+
+    #define BTN_EN1 31
+    #define BTN_EN2 33
+    #define BTN_ENC 35
+#endif
+
+//#endif // MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
 // SPI for Max6675 Thermocouple 
 
+
 #ifndef SDSUPPORT
-// these pins are defined in the SD library if building with SD support  
-#define MAX_SCK_PIN          52
-#define MAX_MISO_PIN         50
-#define MAX_MOSI_PIN         51
-#define MAX6675_SS       53
+    // these pins are defined in the SD library if building with SD support  
+    #define MAX_SCK_PIN          52
+    #define MAX_MISO_PIN         50
+    #define MAX_MOSI_PIN         51
+    #define MAX6675_SS       53
 #else
-#define MAX6675_SS       49
+    #define MAX6675_SS       49
 #endif
 
 #endif //MOTHERBOARD == 3 || MOTHERBOARD == 33 || MOTHERBOARD == 34 || MOTHERBOARD == 77
 
 #ifndef KNOWN_BOARD
-#error Unknown MOTHERBOARD value in configuration.h
+    #error Unknown MOTHERBOARD value in configuration.h
 #endif
 
 //List of pins which to ignore when asked to change by gcode, 0 and 1 are RX and TX, do not mess with those!
 #define _E0_PINS E0_STEP_PIN, E0_DIR_PIN, E0_ENABLE_PIN, HEATER_0_PIN,
 #if EXTRUDERS > 1
-#define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN, HEATER_1_PIN,
+    #define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN, HEATER_1_PIN,
 #else
-#define _E1_PINS
+    #define _E1_PINS
 #endif
+
 #if EXTRUDERS > 2
-#define _E2_PINS E2_STEP_PIN, E2_DIR_PIN, E2_ENABLE_PIN, HEATER_2_PIN,
+    #define _E2_PINS E2_STEP_PIN, E2_DIR_PIN, E2_ENABLE_PIN, HEATER_2_PIN,
 #else
-#define _E2_PINS
+    #define _E2_PINS
 #endif
 
 #ifdef X_STOP_PIN
-#if X_HOME_DIR < 0
-#define X_MIN_PIN X_STOP_PIN
-#define X_MAX_PIN -1
-#else
-#define X_MIN_PIN -1
-#define X_MAX_PIN X_STOP_PIN
-#endif
+    #if X_HOME_DIR < 0
+        #define X_MIN_PIN X_STOP_PIN
+        #define X_MAX_PIN -1
+    #else
+        #define X_MIN_PIN -1
+        #define X_MAX_PIN X_STOP_PIN
+    #endif
 #endif
 
 #ifdef Y_STOP_PIN
-#if Y_HOME_DIR < 0
-#define Y_MIN_PIN Y_STOP_PIN
-#define Y_MAX_PIN -1
-#else
-#define Y_MIN_PIN -1
-#define Y_MAX_PIN Y_STOP_PIN
-#endif
+    #if Y_HOME_DIR < 0
+        #define Y_MIN_PIN Y_STOP_PIN
+        #define Y_MAX_PIN -1
+    #else
+        #define Y_MIN_PIN -1
+        #define Y_MAX_PIN Y_STOP_PIN
+    #endif
 #endif
 
 #ifdef Z_STOP_PIN
-#if Z_HOME_DIR < 0
-#define Z_MIN_PIN Z_STOP_PIN
-#define Z_MAX_PIN -1
-#else
-#define Z_MIN_PIN -1
-#define Z_MAX_PIN Z_STOP_PIN
-#endif
+    #if Z_HOME_DIR < 0
+        #define Z_MIN_PIN Z_STOP_PIN
+        #define Z_MAX_PIN -1
+    #else
+        #define Z_MIN_PIN -1
+        #define Z_MAX_PIN Z_STOP_PIN
+    #endif
 #endif
 
 #ifdef DISABLE_MAX_ENDSTOPS
-#define X_MAX_PIN          -1
-#define Y_MAX_PIN          -1
-#define Z_MAX_PIN          -1
+    #define X_MAX_PIN          -1
+    #define Y_MAX_PIN          -1
+    #define Z_MAX_PIN          -1
 #endif
 
 #ifdef DISABLE_X_MAX_ENDSTOPS
-#define X_MAX_PIN          -1
+    #define X_MAX_PIN          -1
 #endif
 
 #ifdef DISABLE_Y_MAX_ENDSTOPS
-#define Y_MAX_PIN          -1
+    #define Y_MAX_PIN          -1
 #endif
+    
 #ifdef DISABLE_Z_MAX_ENDSTOPS
-#define Z_MAX_PIN          -1
+    #define Z_MAX_PIN          -1
 #endif
 
 #ifdef DISABLE_MIN_ENDSTOPS
-#define X_MIN_PIN          -1
-#define Y_MIN_PIN          -1
-#define Z_MIN_PIN          -1
+    #define X_MIN_PIN          -1
+    #define Y_MIN_PIN          -1
+    #define Z_MIN_PIN          -1
 #endif
 
 #define SENSITIVE_PINS {0, 1, X_STEP_PIN, X_DIR_PIN, X_ENABLE_PIN, X_MIN_PIN, X_MAX_PIN, Y_STEP_PIN, Y_DIR_PIN, Y_ENABLE_PIN, Y_MIN_PIN, Y_MAX_PIN, Z_STEP_PIN, Z_DIR_PIN, Z_ENABLE_PIN, Z_MIN_PIN, Z_MAX_PIN, PS_ON_PIN, \
